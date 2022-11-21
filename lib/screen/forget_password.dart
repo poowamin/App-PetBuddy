@@ -193,7 +193,7 @@ class _ForgetPassword extends State<ForgetPassword> {
           'แสดงอีเมล',
           style: Myconstant().textStyle4(),
         ),
-        icon: const Icon(Icons.key),
+        icon: const Icon(Icons.email),
       ));
 
   Future saveTocheck() async {
