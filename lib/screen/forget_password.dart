@@ -1,11 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_buddy/api/cloudfirestore_api.dart';
 import 'package:pet_buddy/utils.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../constants.dart';
 
@@ -190,7 +190,7 @@ class _ForgetPassword extends State<ForgetPassword> {
       child: ElevatedButton.icon(
         onPressed: () => saveTocheck(),
         label: Text(
-          'แสดงอีเมล',
+          'แสดงรหัสผ่าน',
           style: Myconstant().textStyle4(),
         ),
         icon: const Icon(Icons.email),
@@ -198,11 +198,11 @@ class _ForgetPassword extends State<ForgetPassword> {
 
   Future saveTocheck() async {
     print(tel);
-    final element = await CloudFirestoreApi.getEmailFormtel(
+    final element = await CloudFirestoreApi.getPasswordFromTel(
       tel.trim(),
     );
     print(element);
-    Utils.showToast(context, 'อีเมลของคุณคือ\f\f$element\nกรุณาจดอีเมลของท่านก่อนข้อความหาย', Colors.deepPurple);
+    await Share.share('รหัสผ่านของคุณ\f\f$element');
   }
 
   Future resetPassword() async {

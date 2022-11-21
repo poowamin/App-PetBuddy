@@ -199,9 +199,9 @@ dependencies:
   flutter_thailand_provinces: ^1.0.1
   google_fonts: ^3.0.1
   flutter_launcher_icons: "^0.10.0"
-  flutterfire_cli: ^0.2.6+1
   cloud_functions: ^3.3.9
-
+  share_plus: ^6.3.0
+  
 flutter_icons:
   android: true
   image_path: "icons/icon.png"
