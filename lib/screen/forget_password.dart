@@ -202,11 +202,7 @@ class _ForgetPassword extends State<ForgetPassword> {
       tel.trim(),
     );
     print(element);
-    Utils.showToast(
-      context,
-      'อีเมลของคุณคือ\f\f$element\nกรุณาจดอีเมลของท่านก่อนข้อความหาย',
-      Colors.indigo,
-    );
+    Utils.showToast(context, 'อีเมลของคุณคือ\f\f$element\nกรุณาจดอีเมลของท่านก่อนข้อความหาย', Colors.deepPurple);
   }
 
   Future resetPassword() async {
