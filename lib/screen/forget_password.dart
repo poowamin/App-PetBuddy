@@ -47,8 +47,8 @@ class _ForgetPassword extends State<ForgetPassword> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'กรุณาใส่อีเมลล์ของคุณในช่อง',
-                    // 'กรุณาใส่อีเมลล์ของคุณ\nหรือเบอร์โทรในช่อง',
+                    // 'กรุณาใส่อีเมลล์ของคุณในช่อง',
+                    'กรุณาใส่อีเมลล์ของคุณ\nหรือเบอร์โทรในช่อง',
                     style: GoogleFonts.kanit(
                       textStyle: const TextStyle(fontSize: 20),
                     ),
