@@ -559,7 +559,22 @@ class CloudFirestoreApi {
     return stay!;
   }
 
-  static Future<String> getPasswordFromTel(String tel) async {
+  // static Future<String> getPasswordFromTel(String tel) async {
+  //   String? data;
+  //   await FirebaseFirestore.instance
+  //       .collection('user')
+  //       .where('tel', isEqualTo: tel)
+  //       .limit(1)
+  //       .get()
+  //       .then((querySnapshot) {
+  //     querySnapshot.docs.forEach((result) async {
+  //       data = result.data()['password'];
+  //     });
+  //   });
+  //   return data!;
+  // }
+
+  static Future<String> getEmailFormtel(String tel) async {
     String? data;
     await FirebaseFirestore.instance
         .collection('user')
@@ -567,8 +582,8 @@ class CloudFirestoreApi {
         .limit(1)
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) async {
-        data = result.data()['password'];
+      querySnapshot.docs.forEach((element) async {
+        data = element.data()['email'];
       });
     });
     return data!;

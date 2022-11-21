@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,7 +47,8 @@ class _ForgetPassword extends State<ForgetPassword> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'กรุณาใส่อีเมลล์ของคุณหรือเบอร์โทรในช่อง',
+                    'กรุณาใส่อีเมลล์ของคุณในช่อง',
+                    // 'กรุณาใส่อีเมลล์ของคุณ\nหรือเบอร์โทรในช่อง',
                     style: GoogleFonts.kanit(
                       textStyle: const TextStyle(fontSize: 20),
                     ),
@@ -112,39 +114,39 @@ class _ForgetPassword extends State<ForgetPassword> {
         ),
       );
 
-  void saveTodo() async {
-    print(email);
+  // void saveTodo() async {
+  //   print(email);
 
-    FocusScope.of(context).unfocus();
-    final isValid = _formKey.currentState!.validate();
+  //   FocusScope.of(context).unfocus();
+  //   final isValid = _formKey.currentState!.validate();
 
-    if (!isValid) {
-      return;
-    } else {
-      RegExp emailRegExp = RegExp(
-          r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
-      if (email.isEmpty) {
-        Utils.showToast(context, 'กรุณากรอกอีเมลล์ก่อน', Colors.red);
-        return;
-      } else if (!emailRegExp.hasMatch(email)) {
-        Utils.showToast(context, 'กรุณาตรวจสอบอีเมลล์ก่อน', Colors.red);
-        return;
-      }
+  //   if (!isValid) {
+  //     return;
+  //   } else {
+  //     RegExp emailRegExp = RegExp(
+  //         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+  //     if (email.isEmpty) {
+  //       Utils.showToast(context, 'กรุณากรอกอีเมลล์ก่อน', Colors.red);
+  //       return;
+  //     } else if (!emailRegExp.hasMatch(email)) {
+  //       Utils.showToast(context, 'กรุณาตรวจสอบอีเมลล์ก่อน', Colors.red);
+  //       return;
+  //     }
 
-      final password_test = await CloudFirestoreApi.getPasswordFromEmail(
-        email.trim(),
-      );
-      print(password_test);
+  //     final password_test = await CloudFirestoreApi.getPasswordFromEmail(
+  //       email.trim(),
+  //     );
+  //     print(password_test);
 
-      setState(() {
-        if (password_test == '******') {
-          password = 'กรุณาล็อกอินบัญชี Google';
-        } else {
-          password = 'รหัสของคุณคือ $password_test';
-        }
-      });
-    }
-  }
+  //     setState(() {
+  //       if (password_test == '******') {
+  //         password = 'กรุณาล็อกอินบัญชี Google';
+  //       } else {
+  //         password = 'รหัสของคุณคือ $password_test';
+  //       }
+  //     });
+  //   }
+  // }
 
   Widget buildPasscheck() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,7 +190,7 @@ class _ForgetPassword extends State<ForgetPassword> {
       child: ElevatedButton.icon(
         onPressed: () => saveTocheck(),
         label: Text(
-          'แสดงรหัสผ่าน',
+          'แสดงอีเมล',
           style: Myconstant().textStyle4(),
         ),
         icon: const Icon(Icons.key),
@@ -196,35 +198,18 @@ class _ForgetPassword extends State<ForgetPassword> {
 
   Future saveTocheck() async {
     print(tel);
-    final password_test2 =
-        await CloudFirestoreApi.getPasswordFromTel(tel.trim());
-    print(password_test2);
-
-    setState(() {
-      if (password_test2 == '******') {
-        password = 'กรุณาล็อกอินบัญชี Google';
-      } else {
-        password = 'รหัสของคุณคือ $password_test2';
-      }
-    });
-    //}
+    final element = await CloudFirestoreApi.getEmailFormtel(
+      tel.trim(),
+    );
+    print(element);
+    Utils.showToast(
+      context,
+      'อีเมลของคุณคือ\f\f$element\nกรุณาจดอีเมลของท่านก่อนข้อความหาย',
+      Colors.indigo,
+    );
   }
 
   Future resetPassword() async {
-    // final isValid = _formKey.currentState!.validate();
-    // if (!isValid) {
-    //   return;
-    // } else {
-    //   RegExp emailRegExp = RegExp(
-    //       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
-    //   if (email.isEmpty) {
-    //     Utils.showToast(context, 'กรุณากรอกอีเมลล์ก่อน', Colors.red);
-    //     return;
-    //   } else if (!emailRegExp.hasMatch(email)) {
-    //     Utils.showToast(context, 'กรุณาตรวจสอบอีเมลล์ก่อน', Colors.red);
-    //     return;
-    //   }
-    // }
     showDialog(
       context: context,
       barrierDismissible: false,
