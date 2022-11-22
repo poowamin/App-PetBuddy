@@ -208,7 +208,7 @@ class _ReportList extends State<ReportList> {
                                         style: Myconstant().textStyle1(),
                                       ),
                                       Text(
-                                        '${date.day} ${_numberToMonthMap[date.month]} ${date.year + 543}',
+                                        '${date.day} ${_numberToMonthMap[date.month]} ${date.year + 543}\n${date.hour}:${date.minute}:${date.second}',
                                         style: Myconstant().textStyle7(),
                                       ),
                                     ],
