@@ -202,7 +202,7 @@ class _ForgetPassword extends State<ForgetPassword> {
       tel.trim(),
     );
     print(element);
-    await Share.share('รหัสผ่านของคุณ\f\f$element');
+    await Share.share('\f\f$element');
   }
 
   Future resetPassword() async {

@@ -150,7 +150,7 @@ class _TapDetailReportState extends State<TapDetailReport> {
                                   style: Myconstant().textStyle1(),
                                 ),
                                 Text(
-                                  '${date.day} ${_numberToMonthMap[date.month]} ${date.year + 543}\n${date.hour}:${date.minute}:${date.second}',
+                                  '${date.day} ${_numberToMonthMap[date.month]} ${date.year + 543}\nเวลาที่แจ้ง\f${date.hour}:${date.minute}:${date.second}',
                                   style: Myconstant().textStyle7(),
                                 ),
                               ],
