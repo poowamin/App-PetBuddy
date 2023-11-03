@@ -14,27 +14,27 @@ class CloudFirestoreApi {
       .map((snapshot) =>
           snapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList());
 
-  static Future<String> getTokenFromUserId(String user_id) async {
+  static Future<String> getTokenFromUserId(String userId) async {
     String token = '';
 
     await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
+      for (var result in querySnapshot.docs) {
         token = result.data()['token'];
-      });
+      }
     });
 
     return token;
   }
 
-  static Future<String?> getUsername(String user_id) async {
+  static Future<String?> getUsername(String userId) async {
     String? username;
     await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .limit(1)
         .get()
         .then((querySnapshot) {
@@ -48,7 +48,7 @@ class CloudFirestoreApi {
 
   // รับค่า id แล้วคืนกลับไป
   static Future<String> getIdGroupMonth(String month) async {
-    String? doc_id;
+    String? docId;
     await FirebaseFirestore.instance
         .collection('group_month')
         .where('month', isEqualTo: month)
@@ -56,18 +56,18 @@ class CloudFirestoreApi {
         .get()
         .then((querySnapshot) {
       querySnapshot.docs.forEach((result) async {
-        doc_id = result.data()['group_month_id'];
+        docId = result.data()['group_month_id'];
       });
     });
 
-    return doc_id!;
+    return docId!;
   }
 
-  static Future<String> getPhotoFromUserId(String user_id) async {
+  static Future<String> getPhotoFromUserId(String userId) async {
     String? photo;
     await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .limit(1)
         .get()
         .then((querySnapshot) {
@@ -79,21 +79,21 @@ class CloudFirestoreApi {
     return photo!;
   }
 
-  static Future<UserModel> getUserfromComment(String user_id) async {
-    UserModel? my_account;
+  static Future<UserModel> getUserfromComment(String userId) async {
+    UserModel? myAccount;
 
     final ref = await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .get();
 
     if (ref.size == 0) {
-      my_account = null;
-      return my_account!;
+      myAccount = null;
+      return myAccount!;
     } else {
       await FirebaseFirestore.instance
           .collection('user')
-          .where('user_id', isEqualTo: user_id)
+          .where('user_id', isEqualTo: userId)
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((result) async {
@@ -116,10 +116,10 @@ class CloudFirestoreApi {
       });
     }
 
-    return my_account!;
+    return myAccount!;
   }
 
-  static Future updateAllTrashMonthInit(String user_id) async {
+  static Future updateAllTrashMonthInit(String userId) async {
     await FirebaseFirestore.instance
         .collection('trash_month')
         .get()
@@ -165,40 +165,40 @@ class CloudFirestoreApi {
   }
 
   static Future addComment(
-      String comment, String place_id, String user_id) async {
+      String comment, String placeId, String userId) async {
     final doc = FirebaseFirestore.instance.collection('comment').doc();
     await doc.set({
       'comment': comment,
       'comment_id': doc.id,
       'createdTime': DateTime.now(),
       'like': 0,
-      'place_id': place_id,
-      'user_id': user_id,
+      'place_id': placeId,
+      'user_id': userId,
     });
   }
 
-  static Future setAverageRating(String pet_id) async {
+  static Future setAverageRating(String petId) async {
     double sum = 0;
 
     final ref = await FirebaseFirestore.instance
         .collection('comment')
-        .where('pet_id', isEqualTo: pet_id)
+        .where('pet_id', isEqualTo: petId)
         .get();
 
     if (ref.size == 0) {
       await FirebaseFirestore.instance
           .collection('pet')
-          .doc(pet_id)
+          .doc(petId)
           .update({'rating': "0"});
     } else {
       await FirebaseFirestore.instance
           .collection('comment')
-          .where('pet_id', isEqualTo: pet_id)
+          .where('pet_id', isEqualTo: petId)
           .get()
           .then((querySnapshot) {
-        querySnapshot.docs.forEach((result) {
+        for (var result in querySnapshot.docs) {
           sum = sum + result.data()['rating'];
-        });
+        }
       });
 
       final average = (sum / ref.size).toStringAsFixed(1);
@@ -206,40 +206,40 @@ class CloudFirestoreApi {
 
       await FirebaseFirestore.instance
           .collection('pet')
-          .doc(pet_id)
+          .doc(petId)
           .update({'rating': double.parse(average)});
     }
   }
 
   static Future addFavoritePet(
-      String pet_id, String user_id, String type) async {
+      String petId, String userId, String type) async {
     if (type == 'add') {
-      if (checkLikePet(pet_id, user_id) == true) {
+      if (checkLikePet(petId, userId) == true) {
         return;
       }
 
       final doc = FirebaseFirestore.instance.collection('favorite').doc();
       await doc.set({
         'favorite_id': doc.id,
-        'pet_id': pet_id,
-        'user_id': user_id,
+        'pet_id': petId,
+        'user_id': userId,
         'time': DateTime.now(),
       });
     } else {
       await FirebaseFirestore.instance
           .collection('favorite')
-          .doc(await getPetIdFromUserId(pet_id, user_id))
+          .doc(await getPetIdFromUserId(petId, userId))
           .delete();
     }
   }
 
   static Future<String> getPetIdFromUserId(
-      String pet_id, String user_id) async {
+      String petId, String userId) async {
     String? data;
     await FirebaseFirestore.instance
         .collection('favorite')
-        .where('pet_id', isEqualTo: pet_id)
-        .where('user_id', isEqualTo: user_id)
+        .where('pet_id', isEqualTo: petId)
+        .where('user_id', isEqualTo: userId)
         .limit(1)
         .get()
         .then((querySnapshot) {
@@ -250,24 +250,24 @@ class CloudFirestoreApi {
     return data!;
   }
 
-  static Future<bool> checkLikePet(String pet_id, String user_id) async {
+  static Future<bool> checkLikePet(String petId, String userId) async {
     bool check;
     final ref = await FirebaseFirestore.instance
         .collection('favorite')
-        .where('pet_id', isEqualTo: pet_id)
-        .where('user_id', isEqualTo: user_id)
+        .where('pet_id', isEqualTo: petId)
+        .where('user_id', isEqualTo: userId)
         .get();
 
     ref.size == 0 ? check = false : check = true;
     return check;
   }
 
-  static Future<bool> whoLikeComment(String comment_id, String user_id) async {
+  static Future<bool> whoLikeComment(String commentId, String userId) async {
     bool check;
     final ref = await FirebaseFirestore.instance
         .collection('comment')
-        .where('comment_id', isEqualTo: comment_id)
-        .where('who_like', arrayContainsAny: [user_id]).get();
+        .where('comment_id', isEqualTo: commentId)
+        .where('who_like', arrayContainsAny: [userId]).get();
 
     ref.size == 0 ? check = false : check = true;
     return check;
@@ -289,37 +289,37 @@ class CloudFirestoreApi {
     print(data ??= 0);
   }
 
-  static Stream<List<Message>> getMessages(String chat_link_id) =>
+  static Stream<List<Message>> getMessages(String chatLinkId) =>
       FirebaseFirestore.instance
-          .collection('chats/$chat_link_id/messages')
+          .collection('chats/$chatLinkId/messages')
           .orderBy(MessageField.createdAt, descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs
               .map((doc) => Message.fromJson(doc.data()))
               .toList());
 
-  static Future addChatLink(String user_id, String sender_id) async {
-    late String chat_link_id1 = '', chat_link_id2 = '';
+  static Future addChatLink(String userId, String senderId) async {
+    late String chatLinkId1 = '', chatLinkId2 = '';
     final refUsers1 = FirebaseFirestore.instance
         .collection('chat_link')
         .where(
           'receiver_id',
-          isEqualTo: user_id,
+          isEqualTo: userId,
         )
         .where(
           'sender_id',
-          isEqualTo: sender_id,
+          isEqualTo: senderId,
         );
 
     final refUsers2 = FirebaseFirestore.instance
         .collection('chat_link')
         .where(
           'receiver_id',
-          isEqualTo: sender_id,
+          isEqualTo: senderId,
         )
         .where(
           'sender_id',
-          isEqualTo: user_id,
+          isEqualTo: userId,
         );
 
     final getChatLink1 = await refUsers1.get();
@@ -327,12 +327,12 @@ class CloudFirestoreApi {
     if (getChatLink1.size == 0 && getChatLink2.size == 0) {
       final doc = FirebaseFirestore.instance.collection('chat_link').doc();
       final listUser = [];
-      listUser.add(user_id);
-      listUser.add(sender_id);
+      listUser.add(userId);
+      listUser.add(senderId);
       await doc.set({
         'id': doc.id,
-        'receiver_id': user_id,
-        'sender_id': sender_id,
+        'receiver_id': userId,
+        'sender_id': senderId,
         'message': '',
         'type': '',
         'time': '',
@@ -344,37 +344,37 @@ class CloudFirestoreApi {
     } else {
       await refUsers1.get().then((querySnapshot) {
         querySnapshot.docs.forEach((result) async {
-          chat_link_id1 = result.data()['id'];
+          chatLinkId1 = result.data()['id'];
         });
       });
       await refUsers2.get().then((querySnapshot) {
         querySnapshot.docs.forEach((result) async {
-          chat_link_id2 = result.data()['id'];
+          chatLinkId2 = result.data()['id'];
         });
       });
 
-      String id = '$chat_link_id1 $chat_link_id2'.trim();
+      String id = '$chatLinkId1 $chatLinkId2'.trim();
       return id;
     }
   }
 
-  static Future uploadMessage(String user_id, String message, File image,
-      String type, UserModel my_account) async {
-    String? chatLinkId = await addChatLink(user_id, my_account.user_id);
+  static Future uploadMessage(String userId, String message, File image,
+      String type, UserModel myAccount) async {
+    String? chatLinkId = await addChatLink(userId, myAccount.user_id);
     print('chatLinkId ' + chatLinkId!);
     final refMessages =
         FirebaseFirestore.instance.collection('chats/$chatLinkId/messages');
 
     if (type == 'text') {
       final newMessage = Message(
-        user_id: my_account.user_id,
-        username: my_account.name,
+        user_id: myAccount.user_id,
+        username: myAccount.name,
         message: message,
         type: type,
         time:
             '${DateTime.now().hour}:${DateTime.now().minute.toString().length == 1 ? '0${DateTime.now().minute}' : DateTime.now().minute.toString()} น.',
         day: Utils.getDateThai(),
-        seen: await checkUserStay(user_id) == chatLinkId ? 'yes' : 'no',
+        seen: await checkUserStay(userId) == chatLinkId ? 'yes' : 'no',
         createdAt: DateTime.now(),
       );
 
@@ -384,11 +384,11 @@ class CloudFirestoreApi {
           .collection('chat_link')
           .doc(chatLinkId)
           .update({
-        'receiver_id': user_id,
-        'sender_id': my_account.user_id,
+        'receiver_id': userId,
+        'sender_id': myAccount.user_id,
         'message': message,
         'unseen':
-            await getCountSeen(chatLinkId.trim(), my_account.user_id.trim()),
+            await getCountSeen(chatLinkId.trim(), myAccount.user_id.trim()),
         'type': type,
         'time':
             '${DateTime.now().hour}:${DateTime.now().minute.toString().length == 1 ? '0${DateTime.now().minute}' : DateTime.now().minute.toString()} น.',
@@ -399,14 +399,14 @@ class CloudFirestoreApi {
       String urlPicture = await FireStorageApi.uploadPhoto(image, 'Message');
 
       final newMessage = Message(
-        user_id: my_account.user_id,
-        username: my_account.name,
+        user_id: myAccount.user_id,
+        username: myAccount.name,
         message: urlPicture,
         type: type,
         time:
             '${DateTime.now().hour}:${DateTime.now().minute.toString().length == 1 ? '0${DateTime.now().minute}' : DateTime.now().minute.toString()} น.',
         day: Utils.getDateThai(),
-        seen: await checkUserStay(user_id) == chatLinkId ? 'yes' : 'no',
+        seen: await checkUserStay(userId) == chatLinkId ? 'yes' : 'no',
         createdAt: DateTime.now(),
       );
       await refMessages.add(newMessage.toJson());
@@ -415,11 +415,11 @@ class CloudFirestoreApi {
           .collection('chat_link')
           .doc(chatLinkId)
           .update({
-        'receiver_id': user_id,
-        'sender_id': my_account.user_id,
+        'receiver_id': userId,
+        'sender_id': myAccount.user_id,
         'message': urlPicture,
         'unseen':
-            await getCountSeen(chatLinkId.trim(), my_account.user_id.trim()),
+            await getCountSeen(chatLinkId.trim(), myAccount.user_id.trim()),
         'type': type,
         'time':
             '${DateTime.now().hour}:${DateTime.now().minute.toString().length == 1 ? '0${DateTime.now().minute}' : DateTime.now().minute.toString()} น.',
@@ -430,24 +430,24 @@ class CloudFirestoreApi {
 
     final refUsers = FirebaseFirestore.instance.collection('user');
     await refUsers
-        .doc(user_id)
+        .doc(userId)
         .update({UserModelField.createdTime: DateTime.now()});
   }
 
-  static Future<int> getCountSeen(String chat_link_id, String user_id) async {
+  static Future<int> getCountSeen(String chatLinkId, String userId) async {
     final ref = await FirebaseFirestore.instance
-        .collection('chats/$chat_link_id/messages')
-        .where('user_id', isEqualTo: user_id)
+        .collection('chats/$chatLinkId/messages')
+        .where('user_id', isEqualTo: userId)
         .where('seen', isEqualTo: 'no')
         .get();
 
     return ref.size;
   }
 
-  static Future updateAllseen(String chatLinkId, String user_id) async {
+  static Future updateAllseen(String chatLinkId, String userId) async {
     await FirebaseFirestore.instance
         .collection('chats/$chatLinkId/messages')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .get()
         .then((snapshot) {
       for (DocumentSnapshot ds in snapshot.docs) {
@@ -456,21 +456,21 @@ class CloudFirestoreApi {
     });
   }
 
-  static Future updateUserStay(String user_id, String stay) async {
+  static Future updateUserStay(String userId, String stay) async {
     final refUsers = FirebaseFirestore.instance.collection('user');
-    await refUsers.doc(user_id).update({'stay': stay});
+    await refUsers.doc(userId).update({'stay': stay});
   }
 
-  static Future<UserModel> getUserModelFromUserId(String user_id) async {
+  static Future<UserModel> getUserModelFromUserId(String userId) async {
     UserModel? user;
     await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .limit(1)
         .get()
         .then((querySnapshot) {
       querySnapshot.docs.forEach((result) async {
-        final user_id = result.data()['user_id'];
+        final userId = result.data()['user_id'];
         final email = result.data()['email'];
         final name = result.data()['name'];
         final surname = result.data()['surname'];
@@ -490,7 +490,7 @@ class CloudFirestoreApi {
         final district = result.data()['district'];
 
         user = UserModel(
-          user_id: user_id,
+          user_id: userId,
           email: email,
           name: name,
           password: password,
@@ -513,11 +513,11 @@ class CloudFirestoreApi {
     return user!;
   }
 
-  static Future<String> getDataFromUserId(String user_id, String type) async {
+  static Future<String> getDataFromUserId(String userId, String type) async {
     String? data;
     await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .limit(1)
         .get()
         .then((querySnapshot) {
@@ -543,11 +543,11 @@ class CloudFirestoreApi {
     return data!;
   }
 
-  static Future<String> checkUserStay(String user_id) async {
+  static Future<String> checkUserStay(String userId) async {
     String? stay;
     await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .limit(1)
         .get()
         .then((querySnapshot) {

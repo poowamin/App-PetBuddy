@@ -378,7 +378,7 @@ class _LoginscreenState extends State<Loginscreen> {
           .then((querySnapshot) {
         querySnapshot.docs.forEach((result) async {
           pd.dismiss();
-          var user_id = result.data()['user_id'];
+          var userId = result.data()['user_id'];
           var email = result.data()['email'];
           var password = result.data()['password'];
           var name = result.data()['name'];
@@ -399,7 +399,7 @@ class _LoginscreenState extends State<Loginscreen> {
           final prefs =
               await SharedPreferences.getInstance(); // ประกาศ SharedPreferences
           prefs.setBool('check', true); // เก็บค่า boolean
-          prefs.setString('user_id', user_id);
+          prefs.setString('user_id', userId);
           prefs.setString('email', email!);
           prefs.setString('name', name);
           prefs.setString('password', password);
@@ -416,8 +416,8 @@ class _LoginscreenState extends State<Loginscreen> {
           prefs.setString('amphure', amphure);
           prefs.setString('district', district);
 
-          final my_account = UserModel(
-            user_id: user_id,
+          final myAccount = UserModel(
+            user_id: userId,
             email: email!,
             name: name,
             password: password,
@@ -441,7 +441,7 @@ class _LoginscreenState extends State<Loginscreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => MainAdmin(
-                        my_account: my_account,
+                        my_account: myAccount,
                         from: 'login',
                       )),
               (Route<dynamic> route) => false,
@@ -451,7 +451,7 @@ class _LoginscreenState extends State<Loginscreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => MainUser(
-                        my_account: my_account,
+                        my_account: myAccount,
                         from: 'login',
                       )),
               (Route<dynamic> route) => false,

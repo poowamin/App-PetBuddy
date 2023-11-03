@@ -149,22 +149,22 @@ class _PetList extends State<PetList> {
     Navigator.of(context).pop(false);
   }
 
-  Widget PetAdminWidget(Pet pet, UserModel my_account) => SizedBox(
+  Widget PetAdminWidget(Pet pet, UserModel myAccount) => SizedBox(
       width: 260,
       child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: GestureDetector(
               onTap: () async {
                 bool like = await CloudFirestoreApi.checkLikePet(
-                    pet.pet_id, my_account.user_id);
+                    pet.pet_id, myAccount.user_id);
 
                 Navigator.of(context).push(
                   MaterialPageRoute(
                       builder: (context) => PetDetail(
-                          pet: pet, like: like, my_account: my_account)),
+                          pet: pet, like: like, my_account: myAccount)),
                 );
               },
-              onLongPress: () => editDeleteMethod(context, pet, my_account),
+              onLongPress: () => editDeleteMethod(context, pet, myAccount),
               child: Card(
                 child: Column(
                   children: [
@@ -291,7 +291,7 @@ class _PetList extends State<PetList> {
               ))));
 }
 
-editDeleteMethod(BuildContext context, Pet pet, UserModel my_account) async {
+editDeleteMethod(BuildContext context, Pet pet, UserModel myAccount) async {
   return await showDialog(
       context: context,
       barrierDismissible: true,
@@ -311,7 +311,7 @@ editDeleteMethod(BuildContext context, Pet pet, UserModel my_account) async {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          PetEdit(pet: pet, my_account: my_account),
+                          PetEdit(pet: pet, my_account: myAccount),
                     ));
               },
               child: Text(

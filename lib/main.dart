@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // เช็คว่า login ไว้หรือเปล่า ถ้า login ให้ไป HomePage , ถ้าไม่ได้ Login ให้ไป LoginPage
     final prefs = await SharedPreferences.getInstance();
     var check = prefs.getBool('check') ?? false;
-    var user_id = prefs.getString('user_id') ?? '';
+    var userId = prefs.getString('user_id') ?? '';
     var email = prefs.getString('email') ?? '';
     var name = prefs.getString('name') ?? '';
     var password = prefs.getString('password') ?? '';
@@ -97,8 +97,8 @@ class _SplashScreenState extends State<SplashScreen> {
     var amphure = prefs.getString('amphure') ?? '';
     var district = prefs.getString('district') ?? '';
 
-    final my_account = UserModel(
-      user_id: user_id,
+    final myAccount = UserModel(
+      user_id: userId,
       email: email,
       name: name,
       password: password,
@@ -122,14 +122,14 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  MainAdmin(my_account: my_account, from: 'login')),
+                  MainAdmin(my_account: myAccount, from: 'login')),
         );
       } else {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => MainUser(
-                    my_account: my_account,
+                    my_account: myAccount,
                     from: 'login',
                   )),
         );

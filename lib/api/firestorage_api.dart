@@ -5,11 +5,11 @@ import 'package:path/path.dart' as path;
 // ไฟล์สำหรับจัดการข้อมูลใน firebase
 class FireStorageApi {
   // ลบรูปภาพ
-  static Future removePhoto(String photo_before) async {
-    if (Uri.parse(photo_before).origin ==
+  static Future removePhoto(String photoBefore) async {
+    if (Uri.parse(photoBefore).origin ==
         'https://firebasestorage.googleapis.com') {
       await FirebaseStorage.instance
-          .refFromURL(photo_before)
+          .refFromURL(photoBefore)
           .delete()
           .then((value) => print('Delete Photo Success'));
     }

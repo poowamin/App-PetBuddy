@@ -26,6 +26,7 @@ class _FullImage extends State<FullImage> {
   }
 
   // แสดง UI
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(

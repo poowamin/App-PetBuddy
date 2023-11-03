@@ -126,6 +126,7 @@ class _RatingAdd extends State<RatingAdd> {
                                 onPressed: () => commentController.clear(),
                               ))
                           : Container();
+                      return null;
                     },
                   )),
             ],

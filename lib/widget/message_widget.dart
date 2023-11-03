@@ -87,7 +87,7 @@ class MessageWidget extends StatelessWidget {
               margin: const EdgeInsets.all(4),
               constraints: const BoxConstraints(maxWidth: 140),
               decoration: BoxDecoration(
-                color: isMe ? Colors.grey[100] : Theme.of(context).accentColor,
+                color: isMe ? Colors.grey[100] : Theme.of(context).colorScheme.secondary,
                 borderRadius: isMe
                     ? borderRadius
                         .subtract(const BorderRadius.only(bottomRight: radius))

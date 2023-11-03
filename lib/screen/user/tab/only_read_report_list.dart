@@ -6,7 +6,6 @@ import 'package:pet_buddy/constants.dart';
 import 'package:pet_buddy/model/report.dart';
 import 'package:pet_buddy/utils.dart';
 import 'package:pet_buddy/screen/user/tab/tap_detail_only_read.dart';
-import 'package:pet_buddy/screen/admin/tab/tap_detail_report.dart';
 
 class ReportListReadOnly extends StatefulWidget {
   const ReportListReadOnly({

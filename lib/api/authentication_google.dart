@@ -47,7 +47,7 @@ class AuthenticationGoogle {
             .then((querySnapshot) {
           querySnapshot.docs.forEach((result) async {
             // รับค่าจาก Firestore
-            var user_id = result.data()['user_id'];
+            var userId = result.data()['user_id'];
             var email = result.data()['email'];
             var name = result.data()['name'];
             var password = result.data()['password'];
@@ -58,7 +58,7 @@ class AuthenticationGoogle {
             final prefs = await SharedPreferences
                 .getInstance(); // ประกาศ SharedPreferences
             prefs.setBool('check', true); // เก็บค่า boolean
-            prefs.setString('user_id', user_id);
+            prefs.setString('user_id', userId);
             prefs.setString('email', email);
             prefs.setString('name', name);
             prefs.setString('password', password);

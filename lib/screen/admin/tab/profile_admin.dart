@@ -451,7 +451,7 @@ class _ProfileAdmin extends State<ProfileAdmin> {
         ),
         icon: const Icon(Icons.edit),
         style: ElevatedButton.styleFrom(
-            primary: Colors.blue, fixedSize: const Size(500, 20)),
+            backgroundColor: Colors.blue, fixedSize: const Size(500, 20)),
       ));
 
   Widget buildButtonExit() => Container(
@@ -465,7 +465,7 @@ class _ProfileAdmin extends State<ProfileAdmin> {
         ),
         icon: const Icon(Icons.exit_to_app),
         style: ElevatedButton.styleFrom(
-            primary: Colors.red, fixedSize: const Size(500, 20)),
+            backgroundColor: Colors.red, fixedSize: const Size(500, 20)),
       ));
 
   Widget buildProvince() => Padding(

@@ -222,16 +222,16 @@ class _RegisterscreenState extends State<Registerscreen> {
   Widget buildPasswordConfirm() => TextFormField(
         maxLines: 1,
         initialValue: password_confirm,
-        onChanged: (password_confirm) =>
-            setState(() => this.password_confirm = password_confirm),
-        validator: (password_confirm) {
-          if (password != password_confirm) {
+        onChanged: (passwordConfirm) =>
+            setState(() => password_confirm = passwordConfirm),
+        validator: (passwordConfirm) {
+          if (password != passwordConfirm) {
             return 'รหัสผ่านไม่ตรงกัน';
           }
-          if (password_confirm!.isEmpty) {
+          if (passwordConfirm!.isEmpty) {
             return 'กรุณาใส่รหัสผ่านก่อน';
           }
-          if (password_confirm.length < 6) {
+          if (passwordConfirm.length < 6) {
             return 'รห้สผ่านต้องมากกว่า 6 ตัว';
           }
           return null;
@@ -359,9 +359,7 @@ class _RegisterscreenState extends State<Registerscreen> {
             colorLine: Colors.grey.shade400,
             colorLineHeader: Myconstant.primary,
           );
-          if (province != null) {
-            provinceController.text = province.nameTh.toString();
-          }
+          provinceController.text = province.nameTh.toString();
           proid = province.id;
 
           print(province.nameTh);
@@ -371,6 +369,7 @@ class _RegisterscreenState extends State<Registerscreen> {
           if (value!.isEmpty) {
             return 'กะรุณาระบุจังหวัดก่อน';
           }
+          return null;
         },
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),
@@ -397,9 +396,7 @@ class _RegisterscreenState extends State<Registerscreen> {
               colorBackgroundDialog: Colors.black45.withOpacity(0.2),
               colorLine: Colors.grey.shade400,
               colorLineHeader: Myconstant.primary);
-          if (amphure != null) {
-            amphureController.text = amphure.nameTh.toString();
-          }
+          amphureController.text = amphure.nameTh.toString();
           ampid = amphure.id;
         },
         validator: (value) {
@@ -433,9 +430,7 @@ class _RegisterscreenState extends State<Registerscreen> {
               colorBackgroundDialog: Colors.black45.withOpacity(0.2),
               colorLine: Colors.grey.shade400,
               colorLineHeader: Myconstant.primary);
-          if (district != null) {
-            districtController.text = district.nameTh.toString();
-          }
+          districtController.text = district.nameTh.toString();
         },
         validator: (value) {
           if (value!.isEmpty) {
@@ -460,7 +455,7 @@ class _RegisterscreenState extends State<Registerscreen> {
         ),
         icon: const Icon(Icons.edit),
         style: ElevatedButton.styleFrom(
-            primary: Colors.pink, fixedSize: const Size(500, 20)),
+            backgroundColor: Colors.pink, fixedSize: const Size(500, 20)),
       ));
 
   register() async {

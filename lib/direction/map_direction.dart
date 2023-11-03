@@ -56,7 +56,7 @@ class _MapDirection extends State<MapDirection> {
     super.dispose();
   }
 
-  void getLocation(place_name, latLngDestination) async {
+  void getLocation(placeName, latLngDestination) async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -90,7 +90,7 @@ class _MapDirection extends State<MapDirection> {
       );
       _destination = Marker(
         markerId: const MarkerId('destination'),
-        infoWindow: InfoWindow(title: place_name),
+        infoWindow: InfoWindow(title: placeName),
         icon:
             BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
         position:
@@ -147,8 +147,7 @@ class _MapDirection extends State<MapDirection> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                  foregroundColor: Colors.white, textStyle: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 child: Text(
                   'ORIGIN',
@@ -167,8 +166,7 @@ class _MapDirection extends State<MapDirection> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                  foregroundColor: Colors.white, textStyle: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 child: Text(
                   'DEST',

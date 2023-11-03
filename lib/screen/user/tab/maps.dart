@@ -59,10 +59,10 @@ class _MapscreenState extends State<Mapscreen> {
                   zoom: 15),
             );
           } else {
-            return Center(
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
+                children: <Widget>[
                   CircularProgressIndicator(),
                 ],
               ),

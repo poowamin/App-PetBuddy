@@ -64,8 +64,8 @@ class Utils {
 
   // แสดงวัน ณ ปัจจุบัน
   static String getDateThai() {
-    DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
 
     String day, month = '', year;
 
@@ -101,8 +101,8 @@ class Utils {
   }
 
   static String getMonthThai() {
-    DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
 
     String day, month = '', year;
     year = (date.year + 543).toString();
@@ -164,8 +164,8 @@ class Utils {
   }
 
   static String getYearThai() {
-    DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
 
     String year;
     year = (date.year + 543).toString();

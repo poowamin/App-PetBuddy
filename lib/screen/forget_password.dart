@@ -170,6 +170,7 @@ class _ForgetPassword extends State<ForgetPassword> {
               } else if (tel.length >= 11) {
                 return 'เบอร์โทรต้องไม่เกิน 10 ตัว';
               }
+              return null;
             },
           )),
           password != ''
@@ -224,9 +225,7 @@ class _ForgetPassword extends State<ForgetPassword> {
       Navigator.of(context).popUntil((route) => route.isCurrent);
     } on FirebaseAuthException catch (e) {
       print(e);
-      if (email != null) {
-        Navigator.of(context).pop();
-      }
+      Navigator.of(context).pop();
 
       Utils.showToast(context, 'กรุณาตรวจสอบอีเมลก่อน', Colors.pink);
     }

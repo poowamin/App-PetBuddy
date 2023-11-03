@@ -5,8 +5,6 @@ import 'package:pet_buddy/api/firestorage_api.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_buddy/constants.dart';
 import 'package:pet_buddy/model/report.dart';
-import 'package:pet_buddy/model/user_model.dart';
-import 'package:pet_buddy/utils.dart';
 import 'package:pet_buddy/screen/admin/tab/tap_detail_report.dart';
 
 class ReportList extends StatefulWidget {

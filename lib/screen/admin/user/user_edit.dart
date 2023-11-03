@@ -358,9 +358,7 @@ class _UserEdit extends State<UserEdit> {
             colorLine: Colors.grey.shade400,
             colorLineHeader: Myconstant.primary,
           );
-          if (province != null) {
-            provinceController.text = province.nameTh.toString();
-          }
+          provinceController.text = province.nameTh.toString();
           proid = province.id;
 
           print(province.nameTh);
@@ -370,6 +368,7 @@ class _UserEdit extends State<UserEdit> {
           if (value!.isEmpty) {
             return 'กะรุณาระบุจังหวัดก่อน';
           }
+          return null;
         },
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),
@@ -396,15 +395,14 @@ class _UserEdit extends State<UserEdit> {
               colorBackgroundDialog: Colors.black45.withOpacity(0.2),
               colorLine: Colors.grey.shade400,
               colorLineHeader: Myconstant.primary);
-          if (amphure != null) {
-            amphureController.text = amphure.nameTh.toString();
-          }
+          amphureController.text = amphure.nameTh.toString();
           ampid = amphure.id;
         },
         validator: (value) {
           if (value!.isEmpty) {
             return 'กะรุณาระบุอำเภอก่อน';
           }
+          return null;
         },
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),
@@ -431,14 +429,13 @@ class _UserEdit extends State<UserEdit> {
               colorBackgroundDialog: Colors.black45.withOpacity(0.2),
               colorLine: Colors.grey.shade400,
               colorLineHeader: Myconstant.primary);
-          if (district != null) {
-            districtController.text = district.nameTh.toString();
-          }
+          districtController.text = district.nameTh.toString();
         },
         validator: (value) {
           if (value!.isEmpty) {
             return 'กะรุณาระบุตำบลก่อน';
           }
+          return null;
         },
         decoration: InputDecoration(
           border: const UnderlineInputBorder(),

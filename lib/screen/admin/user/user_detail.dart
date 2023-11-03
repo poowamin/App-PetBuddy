@@ -75,16 +75,16 @@ class _UserDetail extends State<UserDetail> with WidgetsBindingObserver {
     }
   }
 
-  void load_user(String user_id) async {
+  void load_user(String userId) async {
     await FirebaseFirestore.instance
         .collection('user')
-        .where('user_id', isEqualTo: user_id)
+        .where('user_id', isEqualTo: userId)
         .limit(1)
         .get()
         .then((querySnapshot) {
       querySnapshot.docs.forEach((result) async {
         setState(() {
-          user_id = result.data()['user_id'];
+          userId = result.data()['user_id'];
           email = result.data()['email'];
           name = result.data()['name'];
           password = result.data()['password'];
@@ -216,7 +216,7 @@ class _UserDetail extends State<UserDetail> with WidgetsBindingObserver {
                     height: 105,
                     child: photo_before != ''
                         ? Image.network(
-                            '${photo_before}', // this image doesn't exist
+                            '$photo_before', // this image doesn't exist
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
@@ -466,7 +466,7 @@ class _UserDetail extends State<UserDetail> with WidgetsBindingObserver {
         ),
         icon: const Icon(Icons.edit),
         style: ElevatedButton.styleFrom(
-            primary: Colors.blue, fixedSize: const Size(500, 20)),
+            backgroundColor: Colors.blue, fixedSize: const Size(500, 20)),
       ));
 
   Widget buildProvince() => Padding(
@@ -555,7 +555,7 @@ class _UserDetail extends State<UserDetail> with WidgetsBindingObserver {
         ),
         icon: const Icon(Icons.disabled_by_default_outlined),
         style: ElevatedButton.styleFrom(
-            primary: Colors.red, fixedSize: const Size(500, 20)),
+            backgroundColor: Colors.red, fixedSize: const Size(500, 20)),
       ));
 
   Widget buildButtontest() => Container(
@@ -569,7 +569,7 @@ class _UserDetail extends State<UserDetail> with WidgetsBindingObserver {
         ),
         icon: const Icon(Icons.delete),
         style: ElevatedButton.styleFrom(
-            primary: Colors.red, fixedSize: const Size(500, 20)),
+            backgroundColor: Colors.red, fixedSize: const Size(500, 20)),
       ));
 
   // ไปหน้า EditUserPage

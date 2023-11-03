@@ -238,16 +238,16 @@ class _UserAdd extends State<UserAdd> {
   Widget buildPasswordConfirm() => TextFormField(
         maxLines: 1,
         initialValue: password_confirm,
-        onChanged: (password_confirm) =>
-            setState(() => this.password_confirm = password_confirm),
-        validator: (password_confirm) {
-          if (password != password_confirm) {
+        onChanged: (passwordConfirm) =>
+            setState(() => password_confirm = passwordConfirm),
+        validator: (passwordConfirm) {
+          if (password != passwordConfirm) {
             return 'รหัสผ่านไม่ตรงกัน';
           }
-          if (password_confirm!.isEmpty) {
+          if (passwordConfirm!.isEmpty) {
             return 'กรุณาใส่รหัสผ่านก่อน';
           }
-          if (password_confirm.length < 6) {
+          if (passwordConfirm.length < 6) {
             return 'รห้สผ่านต้องมากกว่า 6 ตัว';
           }
           return null;
